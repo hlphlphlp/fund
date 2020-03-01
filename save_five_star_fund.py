@@ -106,7 +106,7 @@ def smart_sorting(funds_lst, mode='ranking'):
     return score_result_list
 
 def sorting_funds():
-    search_stock_fund()
+    search_fund()
     result_funds = get_five_star_fund(32)
 
     # 变成列表，里装字典

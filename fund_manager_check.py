@@ -13,7 +13,7 @@ def get_fund_info(fund_code):
     tengxun_url = "http://qt.gtimg.cn/"
     url_ = tengxun_url + "q=s_jj{fund_code}".format(fund_code=fund_code)
     r = requests.get(url_, headers=headers)
-    # print(r.status_code, r.text)
+    print(r.status_code, r.text)
     if r.status_code == 200:
         return r.text
     return
