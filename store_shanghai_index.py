@@ -78,11 +78,6 @@ def save_data(result_dic):
     print(sql)
     insert(sql)
 
-def save_data(code_id, name, type, useful=0):
-    sql = "INSERT INTO stock_info (`code_id`, `name`, `type`, `useful`) VALUES ({code_id}, {name}, {type}, {useful});".format(code_id=code_id, name=name, type=type, useful=useful)
-    print(sql)
-    insert(sql)
-
 
 if __name__ == '__main__':
     result_dic = get_value_from_tengxun_info()

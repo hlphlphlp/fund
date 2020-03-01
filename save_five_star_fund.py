@@ -8,6 +8,7 @@
 from selenium import webdriver
 import operator
 from index_for_fund_auto_notification import change_fund_increase_dic
+from common import insert
 
 url = "http://cn.morningstar.com/quickrank/default.aspx"
 dr = webdriver.Chrome()
@@ -44,7 +45,6 @@ def get_five_star_fund(count=30):
         dr.find_element_by_id("ctl00_cphMain_AspNetPager1").find_element_by_link_text(">").click()
 
 def save_data(code_id, name, type, useful=0):
-    from fund.index_for_fund_auto_notification import insert
     sql = "INSERT INTO stock_info (`code_id`, `name`, `type`, `useful`) VALUES ({code_id}, {name}, {type}, {useful});".format(code_id=code_id, name=name, type=type, useful=useful)
     print(sql)
     insert(sql)
