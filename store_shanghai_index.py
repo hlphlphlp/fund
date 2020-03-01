@@ -6,7 +6,7 @@
 # @Desc :
 
 import requests
-from .common import headers, insert
+from common import headers, insert
 
 def get_tengxun_info():
     tengxun_url = 'http://web.sqt.gtimg.cn'
