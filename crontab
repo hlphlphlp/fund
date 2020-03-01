@@ -1,0 +1,4 @@
+30 14 * * 1,2,3,4,5 python3 /hlp/fund/index_for_fund_auto_notification.py >> /hlp/fund/fund.log 2>&1
+00 9 * * 6 python3 /hlp/fund/fund_manager_check.py >> /hlp/fund/check_manager.log 2>&1
+00 9 * * 1 echo > /hlp/fund/fund.log
+0 0 3 * * echo > /hlp/fund/check_manager.log
