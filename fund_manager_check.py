@@ -7,7 +7,7 @@
 
 import requests
 from datetime import datetime
-from fund.common import headers, send_mail, selects
+from .common import headers, send_mail, selects
 
 def get_fund_info(fund_code):
     tengxun_url = "http://qt.gtimg.cn/"

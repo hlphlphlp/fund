@@ -8,8 +8,8 @@
 import requests
 import operator
 from datetime import datetime
-from fund.common import selects, send_mail, select_field
-from fund.store_shanghai_index import get_value_from_tengxun_info
+from .common import selects, send_mail, select_field
+from .store_shanghai_index import get_value_from_tengxun_info
 
 def generat_mail_text(result_dic):
     result_content = '''

@@ -7,7 +7,7 @@
 
 from selenium import webdriver
 import operator
-from fund.index_for_fund_auto_notification import change_fund_increase_dic
+from .index_for_fund_auto_notification import change_fund_increase_dic
 
 url = "http://cn.morningstar.com/quickrank/default.aspx"
 dr = webdriver.Chrome()
