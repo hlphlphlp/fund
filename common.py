@@ -70,6 +70,6 @@ def send_mail(subject, contents):
     '''
     import yagmail
     yag = yagmail.SMTP(user=select_field('user', 'mail_sender'), password=select_field('password', 'mail_sender'), host=select_field('host', 'mail_sender'))
-    yag.send([select_field('user', 'mail_to', {'id': 1}), select_field('user', 'mail_to', {'id': 2})], subject, contents)
-    # yag.send([select_field('user', 'mail_to',{'id': 1})
+    yag.send([select_field('email_address', 'mail_to', {'id': 1}), select_field('email_address', 'mail_to', {'id': 2})], subject, contents)
+    # yag.send([select_field('email_address', 'mail_to',{'id': 1})
 
