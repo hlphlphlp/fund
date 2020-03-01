@@ -55,7 +55,7 @@ def select_field(field, table, condition={1:1}, db='fund'):
     """新增，
     例：sql=insert into 表名称 """
     conn = connect(db)
-    sql = "select {field} from {table} where {condition}".format(field=field, table=table, condition=' and '.join([[str(k)+"="+str(v)] for k,v in condition.items()]))
+    sql = "select {field} from {table} where {condition}".format(field=field, table=table, condition=' and '.join([str(k)+"='"+str(v) + "'" for k,v in condition.items()]))
     with conn.cursor() as cursor:
         cursor.execute(sql)
         result = cursor.fetchone()

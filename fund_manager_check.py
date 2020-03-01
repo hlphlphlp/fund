@@ -19,8 +19,9 @@ def get_fund_info(fund_code):
     return
 
 def select_managers():
-    sql = "select f.code_id,f.name as name,m.name as manager_name from fund_info f,fund_manager m where f.manager_id=m.id and f.useful='1';"
-    return selects(sql)
+    fund_sql = "select f.code_id,f.name as name,m.name as manager_name from fund_info f,fund_manager m where f.manager_id=m.id and f.useful='1';"
+    stock_sql = "select s.code_id,s.name as name,m.name as manager_name from stock_info s,fund_manager m where s.manager_id=m.id and s.useful='1';"
+    return selects(fund_sql) + selects(stock_sql)
 
 def judge_manager_has_changed():
     manager_has_changed_lst = []
