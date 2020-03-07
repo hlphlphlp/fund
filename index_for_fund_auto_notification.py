@@ -44,6 +44,12 @@ def compare_3000_history_value(index_value):
     for dic in r:
         if index_value > float(dic['yesterday_end']):
             flag = False
+    # 如果一天内猛跌180点
+    if float(r[0]['yesterday_end']) - index_value >= 180:
+        flag = True
+    # 如果两天内猛跌300点
+    if float(r[1]['yesterday_end']) - index_value >= 300:
+        flag = True
     print("compare_3000_history_value Flag: " + str(flag))
     return flag
 
@@ -55,6 +61,12 @@ def compare_4000_history_value(index_value):
     for dic in r:
         if index_value < float(dic['yesterday_end']):
             flag = False
+    # 如果一天内猛涨180点
+    if index_value - float(r[0]['yesterday_end']) >= 180:
+        flag = True
+    # 如果两天内猛涨300点
+    if index_value - float(r[0]['yesterday_end']) >= 300:
+        flag = True
     print("compare_4000_history_value Flag: " + str(flag))
     return flag
 
@@ -83,7 +95,7 @@ def get_fund_increase_info(fund_code):
     # print(r.status_code, r.text)
     if r.status_code == 200 and r.json()['code'] == 0:
         return r.json()
-    return {"data":{"zxrq":"2020-02-28","total":0,"jzzf":{"w1":0,"w4":0,"w13":0,"w26":0,"w52":0,"year":0,"total":0,"year3":0}}}
+    return {"data":{"zxrq":"2020-00-00","total":0,"jzzf":{"w1":0,"w4":0,"w13":0,"w26":0,"w52":0,"year":0,"total":0,"year3":0}}}
 
 def change_fund_increase_dic(fund_code, fund_name):
     '''
