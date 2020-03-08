@@ -9,6 +9,7 @@ from selenium import webdriver
 import operator
 from index_for_fund_auto_notification import change_fund_increase_dic
 from common import insert
+from time import sleep
 
 url = "http://cn.morningstar.com/quickrank/default.aspx"
 dr = webdriver.Chrome()
@@ -25,6 +26,7 @@ def search_stock_fund():
     dr.find_element_by_id("ctl00_cphMain_btnGo").click()
 
 def search_fund():
+    dr.find_element_by_id("ctl00_cphMain_cblCategory_0").click()
     dr.find_element_by_id("ctl00_cphMain_cblCategory_5").click()
     dr.find_element_by_id("ctl00_cphMain_cblCategory_6").click()
     dr.find_element_by_id("ctl00_cphMain_btnGo").click()
@@ -42,6 +44,7 @@ def get_five_star_fund(count=30):
             else:
                 return result_funds
         # 翻页
+        sleep(3)
         dr.find_element_by_id("ctl00_cphMain_AspNetPager1").find_element_by_link_text(">").click()
 
 def save_data(code_id, name, type, useful=0):
@@ -107,7 +110,7 @@ def smart_sorting(funds_lst, mode='ranking'):
 
 def sorting_funds():
     search_fund()
-    result_funds = get_five_star_fund(32)
+    result_funds = get_five_star_fund(112)
 
     # 变成列表，里装字典
     result_funds_lst = []
@@ -123,7 +126,8 @@ def sorting_funds():
     for i in range(len(score_result_list)):
         code_id = score_result_list[i][0]
         smart_lst.append(change_fund_increase_dic(code_id, get_fund_name(result_funds, code_id)))
-    print('\n'.join([' '.join([str(v) for v in x.values()]) for x in smart_lst]))
+    print('\t'.join([str(v) for v in result_funds_lst[0].keys()]))
+    print('\n'.join(['\t'.join([str(v) for v in x.values()]) for x in smart_lst]))
 
 
 

@@ -71,15 +71,17 @@ def compare_4000_history_value(index_value):
     return flag
 
 def send_email_notice(index_value, content):
+    low_index = select_field('low', 'index_line', {'id': 1})
+    high_index = select_field('high', 'index_line', {'id': 1})
     index_value_float = float(index_value)
-    if index_value_float < 2990 and compare_3000_history_value(index_value_float):
-        subject = '快来【买入】基金啦！今日上证指数低谷 < 3000！'
+    if index_value_float < low_index and compare_3000_history_value(index_value_float):
+        subject = '快来【买入】基金啦！今日上证指数低谷 < %s！' % str(low_index)
         send_mail(subject, content)
-        print(index_value + " < 3000 send email success")
-    elif index_value_float > 4000 and compare_4000_history_value(index_value_float):
-        subject = '快来【卖出】基金啦！今日上证指数趋于高峰 > 4000！'
+        print(index_value + " < %s send email success" % str(low_index))
+    elif index_value_float > high_index and compare_4000_history_value(index_value_float):
+        subject = '快来【卖出】基金啦！今日上证指数趋于高峰 > %s！' % str(high_index)
         send_mail(subject, content)
-        print(index_value + " > 4000 send email success")
+        print(index_value + " > %s send email success" % str(high_index))
 
 
 def select_fund_seek_bank(mode='fund'):

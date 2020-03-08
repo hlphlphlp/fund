@@ -15,7 +15,14 @@
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
+CREATE TABLE `index_line` (
+  `id` int(4) NOT NULL AUTO_INCREMENT,
+  `low` int(16) DEFAULT NULL,
+  `high` int(16) DEFAULT NULL,
+  `desc` varchar(255) DEFAULT NULL,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
  CREATE TABLE `fund_info` (
   `code_id` char(6) NOT NULL,
