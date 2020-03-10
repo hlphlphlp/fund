@@ -27,7 +27,7 @@ CREATE TABLE `index_line` (
  CREATE TABLE `fund_info` (
   `code_id` char(6) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `useful` char(1) DEFAULT '1' COMMENT '0-无用， 1-有用，2-优秀种子（未买）',
+  `useful` char(1) DEFAULT '1' COMMENT '0-无用， 1-优秀种子-未买，2-买了',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `manager_id` INT(4) DEFAULT NULL,
   PRIMARY KEY (`code_id`)

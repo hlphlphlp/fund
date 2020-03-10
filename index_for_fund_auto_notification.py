@@ -44,11 +44,11 @@ def compare_3000_history_value(index_value):
     for dic in r:
         if index_value > float(dic['yesterday_end']):
             flag = False
-    # 如果一天内猛跌180点
-    if float(r[0]['yesterday_end']) - index_value >= 180:
+    # 如果一天内猛跌70点
+    if float(r[0]['yesterday_end']) - index_value >= 70:
         flag = True
-    # 如果两天内猛跌300点
-    if float(r[1]['yesterday_end']) - index_value >= 300:
+    # 如果两天内猛跌120点
+    if float(r[1]['yesterday_end']) - index_value >= 120:
         flag = True
     print("compare_3000_history_value Flag: " + str(flag))
     return flag
@@ -61,11 +61,11 @@ def compare_4000_history_value(index_value):
     for dic in r:
         if index_value < float(dic['yesterday_end']):
             flag = False
-    # 如果一天内猛涨180点
-    if index_value - float(r[0]['yesterday_end']) >= 180:
+    # 如果一天内猛涨120点
+    if index_value - float(r[0]['yesterday_end']) >= 120:
         flag = True
-    # 如果两天内猛涨300点
-    if index_value - float(r[0]['yesterday_end']) >= 300:
+    # 如果两天内猛涨190点
+    if index_value - float(r[0]['yesterday_end']) >= 190:
         flag = True
     print("compare_4000_history_value Flag: " + str(flag))
     return flag
@@ -85,7 +85,7 @@ def send_email_notice(index_value, content):
 
 
 def select_fund_seek_bank(mode='fund'):
-    sql = "select code_id,name from {mode}_info where useful='1';".format(mode=mode)
+    sql = "select code_id,name from {mode}_info where useful >= '1';".format(mode=mode)
     return selects(sql)
 
 def get_fund_increase_info(fund_code):
