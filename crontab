@@ -4,3 +4,4 @@
 00 9 * * 1 echo > /hlp/fund/fund.log
 0 0 3 * * echo > /hlp/fund/check_manager.log
 00 9 * * 1 echo > /hlp/fund/store.log
+00 10 28-31 3,6,9,12 * python3 /hlp/fund/check_3m_fund_ranking.py  >> /hlp/fund/ranking_3m.log 2>&1
