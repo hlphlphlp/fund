@@ -110,6 +110,7 @@ def change_fund_increase_dic(fund_code, fund_name):
     fund_increase_info = get_fund_increase_info(fund_code)
     result_dic['code_id'] = fund_code
     result_dic['fund_name'] = fund_name
+    result_dic['assessment'] = float(get_fund_assessment(fund_code))    #加估值
     result_dic['one_week'] = fund_increase_info['data']['jzzf']['w1']
     result_dic['one_month'] = fund_increase_info['data']['jzzf']['w4']
     result_dic['three_month'] = fund_increase_info['data']['jzzf']['w13']
@@ -128,7 +129,6 @@ def get_result_fund_lst(fund_data, sort_key='assessment'):
         fund_increase_dic.pop('six_month')
         fund_increase_dic.pop('one_year')
         fund_increase_dic.pop('three_year')
-        fund_increase_dic['assessment'] = get_fund_assessment(data_dic['code_id'])
         result_lst.append(fund_increase_dic)
     sorted_result_lst = sorted(result_lst, key=operator.itemgetter(sort_key))
     return sorted_result_lst
