@@ -6,7 +6,7 @@
 # @Desc :
 
 import operator
-import datetime
+from datetime import datetime
 from common import send_mail
 from index_for_fund_auto_notification import select_fund_seek_bank,change_fund_increase_dic
 
@@ -18,6 +18,7 @@ def get_result_fund_lst2(fund_data, sort_key='three_month'):
         fund_increase_dic.pop('six_month')
         fund_increase_dic.pop('one_year')
         fund_increase_dic.pop('three_year')
+        fund_increase_dic.pop('assessment')
         result_lst.append(fund_increase_dic)
     sorted_result_lst = sorted(result_lst, key=operator.itemgetter(sort_key), reverse=True)
     return sorted_result_lst
@@ -36,10 +37,14 @@ def main():
     result_fund_bank_content = get_mail_fund_content(mode='fund')
     # 债券基金
     result_stock_bank_content = get_mail_fund_content(mode='stock')
-    desc = '''
-                一周  一月  三月↓
+    desc = '''--------------------  一周   一月   三月↓
     '''
-    dividing_line = "-----------------债券基金-----------------"
-    send_mail("基金种子季报", [desc, result_fund_bank_content, dividing_line, result_stock_bank_content])
+    dividing_line = '''
+    --------------------债券基金--------------------
+    '''
+    send_mail("基金种子季报，筛西瓜，扔芝麻！", [desc, result_fund_bank_content, dividing_line, result_stock_bank_content])
     print(result_fund_bank_content)
     print(result_stock_bank_content)
+
+if __name__ == '__main__':
+    main()
