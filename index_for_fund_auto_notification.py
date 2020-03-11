@@ -10,6 +10,7 @@ import operator
 from datetime import datetime
 from common import selects, send_mail, select_field
 from store_shanghai_index import get_value_from_tengxun_info
+from fund_assessment import get_fund_assessment
 
 def generat_mail_text(result_dic):
     result_content = '''
@@ -118,14 +119,16 @@ def change_fund_increase_dic(fund_code, fund_name):
     print(result_dic)
     return result_dic
 
-def get_result_fund_lst(fund_data, sort_key='one_week'):
+def get_result_fund_lst(fund_data, sort_key='assessment'):
     result_lst = []
     for data_dic in fund_data:
         fund_increase_dic = change_fund_increase_dic(data_dic['code_id'], data_dic['name'])
         fund_increase_dic.pop('code_id')
+        fund_increase_dic.pop('three_month')
         fund_increase_dic.pop('six_month')
         fund_increase_dic.pop('one_year')
         fund_increase_dic.pop('three_year')
+        fund_increase_dic['assessment'] = get_fund_assessment(data_dic['code_id'])
         result_lst.append(fund_increase_dic)
     sorted_result_lst = sorted(result_lst, key=operator.itemgetter(sort_key))
     return sorted_result_lst
