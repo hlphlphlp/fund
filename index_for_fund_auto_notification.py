@@ -25,6 +25,7 @@ def generat_mail_text(result_dic):
     成交量:  {deal_count}亿手         成交额:  {deal_money}亿
     买入参考：成交量1~2.4亿手，成交额900~2700亿
     ===============================
+                   估值↓  一周  一月
     '''.format(name=result_dic['name'], id=result_dic['id'], current_value=result_dic['current_value'], yesterday_end=result_dic['yesterday_end'],
                today_begin=result_dic['today_begin'], today_highest=result_dic['today_highest'], today_lowest=result_dic['today_lowest'], amplitude=result_dic['amplitude'],
                deal_count=result_dic['deal_count'], deal_money=result_dic['deal_money'], compare_to_yesterday=result_dic['compare_to_yesterday'])
@@ -65,8 +66,8 @@ def compare_4000_history_value(index_value):
     # 如果一天内猛涨120点
     if index_value - float(r[0]['yesterday_end']) >= 120:
         flag = True
-    # 如果两天内猛涨190点
-    if index_value - float(r[0]['yesterday_end']) >= 190:
+    # 如果两天内猛涨200点
+    if index_value - float(r[0]['yesterday_end']) >= 200:
         flag = True
     print("compare_4000_history_value Flag: " + str(flag))
     return flag
