@@ -38,8 +38,9 @@ def strategy_content():
     ''' % select_field('content', 's_content', {'id': 1})
     return content
 
-def compare_3000_history_value(index_value):
-    sql = "select yesterday_end from shanghai_index order by update_time desc limit 18;"
+days = select_field('content', 's_content', {'id': 2})
+def compare_3000_history_value(index_value, days=days):
+    sql = "select yesterday_end from shanghai_index order by update_time desc limit %s;" % str(days)
     r = selects(sql)
     print("yesterday_end: " + str(r))
     flag = True
@@ -55,8 +56,7 @@ def compare_3000_history_value(index_value):
     print("compare_3000_history_value Flag: " + str(flag))
     return flag
 
-def compare_4000_history_value(index_value):
-    days = select_field('content', 's_content', {'id': 2})
+def compare_4000_history_value(index_value, days=days):
     sql = "select yesterday_end from shanghai_index order by update_time desc limit %s;" % str(days)
     r = selects(sql)
     print("yesterday_end: " + str(r))
