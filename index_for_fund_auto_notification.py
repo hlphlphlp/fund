@@ -35,18 +35,22 @@ def strategy_content():
     content = '''
     ===============================
 %s
-    ''' % select_field('content', 's_content', {'id': 1})
+    ''' % select_field('content', 's_content', {'id': 3})
     return content
 
 days = select_field('content', 's_content', {'id': 2})
 def compare_3000_history_value(index_value, days=days):
+    offset = float(select_field('content', 's_content', {'id': 4}))
     sql = "select yesterday_end from shanghai_index order by update_time desc limit %s;" % str(days)
     r = selects(sql)
     print("yesterday_end: " + str(r))
     flag = True
-    for dic in r:
-        if index_value > float(dic['yesterday_end']):
-            flag = False
+    if (index_value - offset) > float(r[0]['yesterday_end']):
+        flag = False
+    else:
+        for dic in r:
+            if index_value > float(dic['yesterday_end']):
+                flag = False
     # 如果一天内猛跌70点
     if float(r[0]['yesterday_end']) - index_value >= 70:
         flag = True
