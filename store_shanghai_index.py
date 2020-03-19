@@ -12,35 +12,35 @@ def get_tengxun_info():
     tengxun_url = 'http://web.sqt.gtimg.cn'
     url_ = tengxun_url + "/q=sh000001"
     r = requests.get(url_, headers=headers)
-    # print(r.status_code, r.text)
+    print(r.status_code, r.text)
     if r.status_code == 200:
         return r.text
     return
 
 def get_value_from_tengxun_info():
     index_info = get_tengxun_info()
-    index_lst = index_info.split('~0.00~0~0.00~0~0.00~0~0.00~0~0.00~0~0.00~0~0.00~0~0.00~0~0.00~0~0.00~0~~')
+    index_lst = index_info.split('~~~~~~')
     index_lst0 = index_lst[0].split("~")
-    index_lst1 = index_lst[1].split("~")
+    index_lst1 = index_lst[0].split("~~~~")[-2].split("~")
+    index_lst2 = index_lst[-1].split("~")
     print("index_lst0: " + str(index_lst0))
     print("index_lst1: " + str(index_lst1))
+    print("index_lst2: " + str(index_lst2))
     name = index_lst0[1]
     id = index_lst0[2]
     current_value = index_lst0[3]
     yesterday_end = index_lst0[4]
     today_begin = index_lst0[5]
-    today_highest = index_lst1[3]
-    today_lowest = index_lst1[4]
-    deal_count = round(int(index_lst0[6])/100000000, 2)
-    deal_money = round(int(index_lst1[7])/10000, 2)
-    compare_to_yesterday = index_lst1[1]
-    amplitude = index_lst1[2]
+    today_highest = index_lst1[-5]
+    today_lowest = index_lst1[-4]
+    deal_count = round(float(index_lst0[6])/100000000, 2)
+    deal_money = round(float(index_lst2[0])/10000, 2)
+    compare_to_yesterday = index_lst1[-7]
+    amplitude = index_lst1[-6]
 
     return {'name': name, 'id': id, 'current_value': current_value, 'yesterday_end': yesterday_end, 'today_begin': today_begin,
             'today_highest': today_highest, 'today_lowest': today_lowest, 'deal_count': deal_count, 'compare_to_yesterday': compare_to_yesterday,
             'amplitude': amplitude, 'deal_money': deal_money}
-
-
 
 def save_data(result_dic):
     sql = '''
