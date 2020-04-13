@@ -86,10 +86,10 @@ def specil_strategy(mode='low'):
     assessment_result = get_result_fund_lst(fund_data=my_fund, sort_key='assessment')
     one_month_result = get_result_fund_lst(fund_data=my_fund, sort_key='one_month')
     if mode == 'low':
-        if (assessment_result[0]['assessment'] <= low_assessment) or (one_month_result[0]['one_month'] <= low_one_month): return True
+        if (assessment_result[0]['assessment'] <= low_assessment) and (one_month_result[0]['one_month'] <= low_one_month): return True
         else: return False
     elif mode == 'high':
-        if (assessment_result[-1]['assessment'] >= high_assessment) or (one_month_result[-1]['one_week'] >= high_one_month): return True
+        if (assessment_result[-1]['assessment'] >= high_assessment) and (one_month_result[-1]['one_week'] >= high_one_month): return True
         else: return False
     else:
         return False
