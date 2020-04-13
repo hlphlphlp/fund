@@ -77,17 +77,35 @@ def compare_4000_history_value(index_value, days=days):
     print("compare_4000_history_value Flag: " + str(flag))
     return flag
 
+def specil_strategy(mode='low'):
+    low_assessment = select_field('low', 'index_line', {'id': 3})
+    high_assessment = select_field('high', 'index_line', {'id': 3})
+    low_one_month = select_field('low', 'index_line', {'id': 4})
+    high_one_month = select_field('high', 'index_line', {'id': 4})
+    my_fund = select_fund_seek_bank(mode='fund')
+    assessment_result = get_result_fund_lst(fund_data=my_fund, sort_key='assessment')
+    one_month_result = get_result_fund_lst(fund_data=my_fund, sort_key='one_month')
+    if mode == 'low':
+        if (assessment_result[0]['assessment'] <= low_assessment) or (one_month_result[0]['one_month'] <= low_one_month): return True
+        else: return False
+    elif mode == 'high':
+        if (assessment_result[-1]['assessment'] >= high_assessment) or (one_month_result[-1]['one_week'] >= high_one_month): return True
+        else: return False
+    else:
+        return False
+
 def send_email_notice(index_value, content):
     low_index1 = select_field('low', 'index_line', {'id': 1})
     high_index1 = select_field('high', 'index_line', {'id': 1})
     low_index2 = select_field('low', 'index_line', {'id': 2})
     high_index2 = select_field('high', 'index_line', {'id': 2})
     index_value_float = float(index_value)
-    if (index_value_float < low_index2) or (index_value_float < low_index1 and compare_3000_history_value(index_value_float)):
+
+    if (index_value_float < low_index2 and specil_strategy(mode='low')) or (index_value_float < low_index1 and compare_3000_history_value(index_value_float)):
         subject = '快来【买入】基金啦！今日上证指数低谷 = %s！' % str(index_value_float)
         send_mail(subject, content)
         print(index_value + " < %s send email success" % str(low_index1))
-    elif (index_value_float > high_index2) or (index_value_float > high_index1 and compare_4000_history_value(index_value_float)):
+    elif (index_value_float > high_index2 and specil_strategy(mode='high')) or (index_value_float > high_index1 and compare_4000_history_value(index_value_float)):
         subject = '快来【卖出】基金啦！今日上证指数趋于高峰 > %s！' % str(index_value_float)
         send_mail(subject, content)
         print(index_value + " > %s send email success" % str(high_index1))
@@ -96,6 +114,11 @@ def send_email_notice(index_value, content):
 def select_fund_seek_bank(mode='fund'):
     sql = "select code_id,name from {mode}_info where useful >= '1';".format(mode=mode)
     return selects(sql)
+
+def select_my_fund(mode='fund'):
+    sql = "select code_id,name from {mode}_info where useful = '2';".format(mode=mode)
+    return selects(sql)
+
 
 def get_fund_increase_info(fund_code):
     tengxun_url = "http://web.ifzq.gtimg.cn"
