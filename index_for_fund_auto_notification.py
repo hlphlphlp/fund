@@ -80,16 +80,16 @@ def compare_4000_history_value(index_value, days=days):
 def specil_strategy(mode='low'):
     low_assessment = select_field('low', 'index_line', {'id': 3})
     high_assessment = select_field('high', 'index_line', {'id': 3})
-    low_one_month = select_field('low', 'index_line', {'id': 4})
-    high_one_month = select_field('high', 'index_line', {'id': 4})
+    low_one_week = select_field('low', 'index_line', {'id': 4})
+    high_one_week = select_field('high', 'index_line', {'id': 4})
     my_fund = select_fund_seek_bank(mode='fund')
     assessment_result = get_result_fund_lst(fund_data=my_fund, sort_key='assessment')
-    one_month_result = get_result_fund_lst(fund_data=my_fund, sort_key='one_month')
+    one_week_result = get_result_fund_lst(fund_data=my_fund, sort_key='one_week')
     if mode == 'low':
-        if (assessment_result[0]['assessment'] <= low_assessment) and (one_month_result[0]['one_month'] <= low_one_month): return True
+        if (assessment_result[0]['assessment'] <= low_assessment) and (one_week_result[0]['one_week'] <= low_one_week): return True
         else: return False
     elif mode == 'high':
-        if (assessment_result[-1]['assessment'] >= high_assessment) and (one_month_result[-1]['one_week'] >= high_one_month): return True
+        if (assessment_result[-1]['assessment'] >= high_assessment) and (one_week_result[-1]['one_week'] >= high_one_week): return True
         else: return False
     else:
         return False
