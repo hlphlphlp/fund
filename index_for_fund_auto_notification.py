@@ -38,8 +38,7 @@ def strategy_content():
     ''' % select_field('content', 's_content', {'id': 3})
     return content
 
-days = select_field('content', 's_content', {'id': 2})
-def compare_3000_history_value(index_value, days=days):
+def compare_3000_history_value(index_value, days = select_field('content', 's_content', {'id': 2})):
     offset = float(select_field('content', 's_content', {'id': 4}))
     sql = "select yesterday_end from shanghai_index order by update_time desc limit %s;" % str(days)
     r = selects(sql)
@@ -60,7 +59,7 @@ def compare_3000_history_value(index_value, days=days):
     print("compare_3000_history_value Flag: " + str(flag))
     return flag
 
-def compare_4000_history_value(index_value, days=days):
+def compare_4000_history_value(index_value, days= select_field('content', 's_content', {'id': 2})):
     sql = "select yesterday_end from shanghai_index order by update_time desc limit %s;" % str(days)
     r = selects(sql)
     print("yesterday_end: " + str(r))
@@ -109,7 +108,6 @@ def send_email_notice(index_value, content):
         subject = '快来【卖出】基金啦！今日上证指数趋于高峰 > %s！' % str(index_value_float)
         send_mail(subject, content)
         print(index_value + " > %s send email success" % str(high_index1))
-
 
 def select_fund_seek_bank(mode='fund'):
     sql = "select code_id,name from {mode}_info where useful >= '1';".format(mode=mode)
@@ -172,6 +170,18 @@ def get_mail_fund_content(mode='fund'):
     result_fund_bank_content = '\n'.join([' '.join([str(v) for v in x.values()]) for x in result_fund_bank_lst])
     return result_fund_bank_content
 
+def get_avg_index_last_days(days = select_field('content', 's_content', {'id': 5})):
+    sql = "select avg(y.yesterday_end) AVG,max(y.yesterday_end) MAX,min(y.yesterday_end) MIN from (select yesterday_end from shanghai_index order by update_time desc limit {days}) as y;".format(days=days)
+    res = selects(sql)
+    return res[0]
+
+def avg_content():
+    res = get_avg_index_last_days()
+    content = '''
+    最近平均值：{avg}  最小值：{min}  最大值：{max}
+    '''.format(avg=res['AVG'], min=res['MIN'], max=res['MAX'])
+    return content
+
 def main():
     print("Today's date: " + str(datetime.now()))
     # 股票基金
@@ -182,7 +192,7 @@ def main():
     index_content = generat_mail_text(result_dic)
     print("generat_mail_text success!")
     dividing_line = "-----------------债券基金-----------------"
-    send_email_notice(result_dic['current_value'], [index_content, result_fund_bank_content, dividing_line, result_stock_bank_content, strategy_content()])
+    send_email_notice(result_dic['current_value'], [avg_content(), index_content, result_fund_bank_content, dividing_line, result_stock_bank_content, strategy_content()])
     print(result_fund_bank_content)
     print(index_content)
     print(result_stock_bank_content)
