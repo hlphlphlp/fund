@@ -167,16 +167,18 @@ def get_mail_fund_content(mode='fund'):
     result_fund_bank_content = '\n'.join([' '.join([str(v) for v in x.values()]) for x in result_fund_bank_lst])
     return result_fund_bank_content
 
-def get_avg_index_last_days(days = select_field('content', 's_content', {'id': 5})):
+def get_avg_index_last_days(days):
     sql = "select avg(y.yesterday_end) AVG,max(y.yesterday_end) MAX,min(y.yesterday_end) MIN from (select yesterday_end from shanghai_index order by update_time desc limit {days}) as y;".format(days=days)
     res = selects(sql)
     return res[0]
 
-def avg_content():
-    res = get_avg_index_last_days()
+def avg_content(days = select_field('content', 's_content', {'id': 5})):
+    res = get_avg_index_last_days(days)
     content = '''
-    最近平均值：{avg}  最小值：{min}  最大值：{max}
-    '''.format(avg=res['AVG'], min=res['MIN'], max=res['MAX'])
+    最近 {somedays} 天的平均值：{avg}
+    最小值：{min}   最大值：{max}
+    
+    '''.format(avg=res['AVG'], min=res['MIN'], max=res['MAX'], somedays=days)
     return content
 
 def main():
