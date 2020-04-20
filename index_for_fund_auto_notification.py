@@ -179,6 +179,7 @@ def avg_content(days = select_field('content', 's_content', {'id': 5})):
     最小值：{min}   最大值：{max}
     
     '''.format(avg=res['AVG'], min=res['MIN'], max=res['MAX'], somedays=days)
+    print(content)
     return content
 
 def main():
