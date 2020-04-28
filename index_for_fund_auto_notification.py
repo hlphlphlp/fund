@@ -191,7 +191,7 @@ def main():
     result_dic = get_value_from_tengxun_info()
     index_content = generat_mail_text(result_dic)
     print("generat_mail_text success!")
-    dividing_line = '''估值  一周↑  一月
+    dividing_line = '''
     -----------------债券基金-----------------'''
     send_email_notice(result_dic['current_value'], [avg_content(), index_content, result_fund_bank_content, dividing_line, result_stock_bank_content, strategy_content()])
     print(result_fund_bank_content)
