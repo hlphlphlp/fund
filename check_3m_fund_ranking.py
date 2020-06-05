@@ -41,9 +41,9 @@ def get_result_fund_lst3(fund_data, sort_key='three_month'):
 def get_mail_fund_content(mode='fund'):
     fund_data = select_fund_seek_bank(mode)
     print("fund_data===========" + str(fund_data))
-    if '3' in str(months):
+    if '3' == str(months):
         result_fund_bank_lst = get_result_fund_lst3(fund_data)
-    else:
+    elif '6' == str(months):
         result_fund_bank_lst = get_result_fund_lst6(fund_data)
     print("result_fund_bank_lst===========" + str(result_fund_bank_lst))
     result_fund_bank_content = '\n'.join([' '.join([str(v) for v in x.values()]) for x in result_fund_bank_lst])
@@ -55,10 +55,10 @@ def main():
     result_fund_bank_content = get_mail_fund_content(mode='fund')
     # 债券基金
     result_stock_bank_content = get_mail_fund_content(mode='stock')
-    if '3' in str(months):
+    if '3' == str(months):
         desc = '''--------------------  一周   一月   三月↓
         '''
-    else:
+    elif '6' == str(months):
         desc = '''--------------------  六月↓   一年   三年
         '''
     dividing_line = '''
