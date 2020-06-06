@@ -10,7 +10,7 @@ from datetime import datetime
 from common import send_mail
 from index_for_fund_auto_notification import select_fund_seek_bank,change_fund_increase_dic
 
-months = sys.argv[0]
+months = sys.argv[1]
 
 def get_result_fund_lst6(fund_data, sort_key='six_month'):
     result_lst = []
