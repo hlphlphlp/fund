@@ -56,15 +56,17 @@ def main():
     # 债券基金
     result_stock_bank_content = get_mail_fund_content(mode='stock')
     if '3' == str(months):
+        mail_title = "基金种子季报"
         desc = '''--------------------  一周   一月   三月↓
         '''
     elif '6' == str(months):
+        mail_title = "基金种子半年报，筛西瓜，扔芝麻！"
         desc = '''--------------------  六月↓   一年   三年
         '''
     dividing_line = '''
     --------------------债券基金--------------------
     '''
-    send_mail("基金种子季报，筛西瓜，扔芝麻！", [desc, result_fund_bank_content, dividing_line, result_stock_bank_content])
+    send_mail(mail_title, [desc, result_fund_bank_content, dividing_line, result_stock_bank_content])
     print(result_fund_bank_content)
     print(result_stock_bank_content)
 
