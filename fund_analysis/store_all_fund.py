@@ -10,10 +10,14 @@ import json
 import requests
 from fund.common import insert
 
+headers = {"Upgrade-Insecure-Requests": "1",
+           "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+           }
+
 
 def get_all_funds():
     url = 'http://fund.eastmoney.com/js/fundcode_search.js'
-    r = requests.get(url)
+    r = requests.get(url, headers=headers)
     if r.status_code == 200:
         res = r.text.split('var r =')[-1].strip(';')
         return json.loads(res)
