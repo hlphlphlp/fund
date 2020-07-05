@@ -1,0 +1,36 @@
+#!/usr/bin/env python 
+# -*- coding: utf-8 -*- 
+# @File : store_all_fund.py
+# @Desc : 
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../..")
+
+import json
+import requests
+from fund.common import insert
+
+
+def get_all_funds():
+    url = 'http://fund.eastmoney.com/js/fundcode_search.js'
+    r = requests.get(url)
+    if r.status_code == 200:
+        res = r.text.split('var r =')[-1].strip(';')
+        return json.loads(res)
+    else:
+        print("Get funds from http://fund.eastmoney.com/js/fundcode_search.js is failed")
+        return
+
+
+def generat_sql_for_insert_all_funds():
+    funds = get_all_funds()
+    sql = "INSERT INTO `fund`.`all_funds` (`code_id`,	`name`,	`type`) VALUES "
+    for fund in funds:
+        print(fund)
+        tuples = (fund[0], fund[2], fund[3])
+        sql = sql + str(tuples) + ','
+    return sql.strip(',')
+
+
+if __name__ == '__main__':
+    insert(generat_sql_for_insert_all_funds())
