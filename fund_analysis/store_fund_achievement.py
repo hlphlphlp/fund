@@ -44,7 +44,7 @@ def get_fund_increase_info(fund_code):
 
 def generat_sql_for_insert_fund_achievement(fund_code_list):
     times = 0
-    today_date = datetime.date.today()
+    today_date = datetime.date.today().strftime('%Y-%m-%d')
     sql = "INSERT INTO `fund`.`fund_achievement` (`date`, `code_id`, `scale`, `week1`, `month1`, `month3`, `month6`, `year1`, `year3`) VALUES "
     for code_id in fund_code_list:
         times += 1
@@ -53,7 +53,6 @@ def generat_sql_for_insert_fund_achievement(fund_code_list):
         sql = sql + str(tuples) + ','
         if times % 300 == 0:
             time.sleep(60)
-    print(sql)
     return sql.strip(',')
 
 
@@ -67,5 +66,6 @@ def get_fund_code():
 
 if __name__ == '__main__':
     fund_code_list = get_fund_code()
-    # fund_code_list = ['000001', '000002', '000003', '000004']
-    generat_sql_for_insert_fund_achievement(fund_code_list)
+    sql = generat_sql_for_insert_fund_achievement(fund_code_list)
+    print(sql)
+    insert(sql)
