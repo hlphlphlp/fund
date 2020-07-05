@@ -26,11 +26,15 @@ def generat_sql_for_insert_all_funds():
     funds = get_all_funds()
     sql = "INSERT INTO `fund`.`all_funds` (`code_id`,	`name`,	`type`) VALUES "
     for fund in funds:
-        print(fund)
         tuples = (fund[0], fund[2], fund[3])
         sql = sql + str(tuples) + ','
     return sql.strip(',')
 
 
+def store_funds():
+    sql = generat_sql_for_insert_all_funds()
+    insert(sql)
+
+
 if __name__ == '__main__':
-    insert(generat_sql_for_insert_all_funds())
+    store_funds()
