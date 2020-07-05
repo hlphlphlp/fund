@@ -20,7 +20,9 @@ def get_fund_scale(fund_code):
     r = requests.get(url, headers=headers)
     if r.status_code == 200:
         res = r.text.split('var jzcgm_apidata=')[-1]
-        return json.loads(res)[-1][-1]
+        if res:
+            return json.loads(res)[-1][-1]
+        return 0
     else:
         print("Get fund's scale from {url} is failed".format(url=url))
         return
@@ -53,9 +55,14 @@ def generat_sql_for_insert_fund_achievement(fund_code_list):
 
 
 def get_fund_code():
-    res = selects("select code_id from all_funds")
-    return res.value()
+    code_lst = []
+    res_lst = selects("select code_id from all_funds")
+    for r in res_lst:
+        code_lst.append(r['code_id'])
+    return code_lst
 
 
 if __name__ == '__main__':
-    generat_sql_for_insert_fund_achievement(get_fund_code())
+    fund_code_list = get_fund_code()
+    print(fund_code_list)
+    generat_sql_for_insert_fund_achievement(fund_code_list)
