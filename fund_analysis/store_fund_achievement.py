@@ -19,9 +19,11 @@ def get_fund_scale(fund_code):
     url = "http://fundf10.eastmoney.com/FundArchivesDatas.aspx?type=jzcgm&code={fund_code}".format(fund_code=fund_code)
     r = requests.get(url, headers=headers)
     if r.status_code == 200:
-        res = r.text.split('var jzcgm_apidata=')[-1]
+        text = r.text.split('var jzcgm_apidata=')[-1]
+        res = json.loads(text)
+        # print(res)
         if res:
-            return json.loads(res)[-1][-1]
+            return res[-1][-1]
         return 0
     else:
         print("Get fund's scale from {url} is failed".format(url=url))
@@ -45,6 +47,7 @@ def generat_sql_for_insert_fund_achievement(fund_code_list):
     today_date = datetime.date.today()
     sql = "INSERT INTO `fund`.`fund_achievement` (`date`, `code_id`, `scale`, `week1`, `month1`, `month3`, `month6`, `year1`, `year3`) VALUES "
     for code_id in fund_code_list:
+        times += 1
         achievement_dic = get_fund_increase_info(code_id)
         tuples = (today_date, code_id, get_fund_scale(code_id), achievement_dic['w1'], achievement_dic['w4'], achievement_dic['w13'], achievement_dic['w26'], achievement_dic['year'], achievement_dic['year3'])
         sql = sql + str(tuples) + ','
@@ -63,6 +66,6 @@ def get_fund_code():
 
 
 if __name__ == '__main__':
-    fund_code_list = get_fund_code()
-    print(fund_code_list)
+    # fund_code_list = get_fund_code()
+    fund_code_list = ['000001', '000002', '000003', '000004']
     generat_sql_for_insert_fund_achievement(fund_code_list)
