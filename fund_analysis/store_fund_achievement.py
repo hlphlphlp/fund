@@ -66,6 +66,6 @@ def get_fund_code():
 
 
 if __name__ == '__main__':
-    # fund_code_list = get_fund_code()
-    fund_code_list = ['000001', '000002', '000003', '000004']
+    fund_code_list = get_fund_code()
+    # fund_code_list = ['000001', '000002', '000003', '000004']
     generat_sql_for_insert_fund_achievement(fund_code_list)
