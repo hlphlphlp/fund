@@ -45,11 +45,11 @@ def get_fund_increase_info(fund_code):
 def generat_sql_for_insert_fund_achievement(fund_code_list):
     times = 0
     today_date = datetime.date.today().strftime('%Y-%m-%d')
-    sql = "INSERT INTO `fund`.`fund_achievement` (`date`, `code_id`, `scale`, `week1`, `month1`, `month3`, `month6`, `year1`, `year3`) VALUES "
+    sql = "INSERT INTO `fund`.`fund_achievement` (`date`, `code_id`, `scale`, `week1`, `month1`, `month3`, `month6`, `year1`, `year3`, `total`) VALUES "
     for code_id in fund_code_list:
         times += 1
         achievement_dic = get_fund_increase_info(code_id)
-        tuples = (today_date, code_id, get_fund_scale(code_id), achievement_dic['w1'], achievement_dic['w4'], achievement_dic['w13'], achievement_dic['w26'], achievement_dic['year'], achievement_dic['year3'])
+        tuples = (today_date, code_id, get_fund_scale(code_id), achievement_dic['w1'], achievement_dic['w4'], achievement_dic['w13'], achievement_dic['w26'], achievement_dic['w52'], achievement_dic['year3'], achievement_dic['total'])
         sql = sql + str(tuples) + ','
         if times % 300 == 0:
             time.sleep(60)
@@ -64,8 +64,14 @@ def get_fund_code():
     return code_lst
 
 
-if __name__ == '__main__':
+def main():
     fund_code_list = get_fund_code()
-    sql = generat_sql_for_insert_fund_achievement(fund_code_list)
-    print(sql)
-    insert(sql)
+    n = 100
+    for codes in [fund_code_list[i:i + n] for i in range(0, len(fund_code_list), n)]:
+        sql = generat_sql_for_insert_fund_achievement(codes)
+        print(sql)
+        insert(sql)
+
+
+if __name__ == '__main__':
+    main()

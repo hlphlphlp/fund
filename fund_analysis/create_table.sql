@@ -16,5 +16,6 @@
 	`month6` float(16),
 	`year1` float(16),
 	`year3` float(16),
+	`total` float(32),
   PRIMARY KEY (`date`,`code_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
