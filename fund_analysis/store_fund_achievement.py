@@ -36,7 +36,7 @@ def get_fund_increase_info(fund_code):
     jjstring = 'jj' + str(fund_code)
     params = {'symbol': jjstring}
     r = requests.get(url_, params=params, headers=headers)
-    print(r.status_code, r.text)
+    # print(r.status_code, r.text)
     if r.status_code == 200 and r.json()['code'] == 0:
         return r.json()['data']['jzzf']
     return {"w1": 0, "w4": 0, "w13": 0, "w26": 0, "w52": 0, "year": 0, "total": 0, "year3": 0}
@@ -52,7 +52,7 @@ def generat_sql_for_insert_fund_achievement(fund_code_list):
         tuples = (today_date, code_id, get_fund_scale(code_id), achievement_dic['w1'], achievement_dic['w4'], achievement_dic['w13'], achievement_dic['w26'], achievement_dic['w52'], achievement_dic['year3'], achievement_dic['total'])
         sql = sql + str(tuples) + ','
         if times % 300 == 0:
-            time.sleep(60)
+            time.sleep(10)
     return sql.strip(',')
 
 
@@ -66,11 +66,12 @@ def get_fund_code():
 
 def main():
     fund_code_list = get_fund_code()
-    n = 100
+    n = 20
     for codes in [fund_code_list[i:i + n] for i in range(0, len(fund_code_list), n)]:
         sql = generat_sql_for_insert_fund_achievement(codes)
         print(sql)
         insert(sql)
+        time.sleep(10)
 
 
 if __name__ == '__main__':
