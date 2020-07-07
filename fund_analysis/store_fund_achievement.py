@@ -66,7 +66,7 @@ def get_fund_code():
 
 def main():
     fund_code_list = get_fund_code()
-    n = 20
+    n = 1000
     for codes in [fund_code_list[i:i + n] for i in range(0, len(fund_code_list), n)]:
         sql = generat_sql_for_insert_fund_achievement(codes)
         print(sql)
