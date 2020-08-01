@@ -37,7 +37,7 @@ def main():
                                     (
                                         CURRENT_DATE,
                                         '{blue_numbers}',
-                                        '{red_numbers}',
+                                        '{red_numbers}'
                                     );'''.format(blue_numbers=str(blue_lucky_numbers), red_numbers=str(red_lucky_numbers)), db='daletou')
 
 

@@ -1,1 +1,1 @@
-0 18 * * *  python3 /hlp/fund/store_lucky_numbers.py >> /hlp/fund/lucky_numbers.log 2>&1
+0 18 * * *  python3 /hlp/fund/da_le_tou/store_lucky_numbers.py >> /hlp/fund/da_le_tou/lucky_numbers.log 2>&1
