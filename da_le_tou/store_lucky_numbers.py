@@ -25,7 +25,7 @@ def generate_diff_numbers(number_list, count):
 
 
 def main():
-    blue_number_list = generate_list(36)
+    blue_number_list = generate_list(35)
     blue_lucky_numbers = generate_diff_numbers(blue_number_list, 5)
     red_number_list = generate_list(12)
     red_lucky_numbers = generate_diff_numbers(red_number_list, 2)
@@ -42,4 +42,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    print(generate_list(3))
