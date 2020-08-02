@@ -42,5 +42,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # main()
-    print(generate_list(3))
+    main()
