@@ -48,7 +48,7 @@ def verify(lotto_blue, lotto_red):
     :param lotto_red:
     :return:
     '''
-    my_numbers = selects(sql='select date,blue,red from lucky_numbers', db='daletou')
+    my_numbers = selects(sql="select date,blue,red from lucky_numbers where isBuyed = '1'", db='daletou')
     for luck in my_numbers:
         luck_blue_count = 0
         luck_red_count = 0
@@ -85,5 +85,7 @@ def verify(lotto_blue, lotto_red):
 
 
 if __name__ == '__main__':
+    today = '2020-09-14'
     winning_numbers = query_wining_numbers()
-    verify(winning_numbers['2020-08-01']['blue'], winning_numbers['2020-08-01']['red'])
+    print('%s`s winner number is: '% today + str(winning_numbers[today]))
+    verify(winning_numbers[today]['blue'], winning_numbers[today]['red'])
