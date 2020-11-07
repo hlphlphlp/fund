@@ -85,7 +85,7 @@ def verify(lotto_blue, lotto_red):
 
 
 if __name__ == '__main__':
-    today = '2020-09-14'
+    today = '2020-11-07'
     winning_numbers = query_wining_numbers()
     print('%s`s winner number is: '% today + str(winning_numbers[today]))
     verify(winning_numbers[today]['blue'], winning_numbers[today]['red'])

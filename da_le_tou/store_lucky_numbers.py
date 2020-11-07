@@ -12,7 +12,7 @@ def generate_list(number):
     return [i + 1 for i in range(number)]
 
 
-def generate_diff_numbers(number_list, count):
+def generate_diff_numbers_basic(number_list, count):
     import random
     res_list = []
     for i in range(count):
@@ -24,11 +24,25 @@ def generate_diff_numbers(number_list, count):
     return res_list
 
 
+def generate_diff_numbers_special(number_list, count):
+    import random
+    res_list = []
+    for i in range(count):
+        temp_list = [x for x in number_list if x not in res_list]
+        # print("temp_list: " + str(temp_list))
+        while len(temp_list) > 1:
+            pop_number = random.choice(temp_list)
+            # print("pop_number: " + str(pop_number))
+            temp_list.remove(pop_number)
+        res_list.append(temp_list[0])
+    return res_list
+
+
 def main():
     blue_number_list = generate_list(34)
-    blue_lucky_numbers = generate_diff_numbers(blue_number_list, 5)
+    blue_lucky_numbers = generate_diff_numbers_special(blue_number_list, 5)
     red_number_list = generate_list(11)
-    red_lucky_numbers = generate_diff_numbers(red_number_list, 2)
+    red_lucky_numbers = generate_diff_numbers_special(red_number_list, 2)
     blue_lucky_numbers.sort()
     red_lucky_numbers.sort()
     print(blue_lucky_numbers, red_lucky_numbers)
