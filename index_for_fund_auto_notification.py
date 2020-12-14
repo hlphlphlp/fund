@@ -38,6 +38,7 @@ def strategy_content():
     ''' % select_field('content', 's_content', {'id': 3})
     return content
 
+
 def compare_3000_history_value(index_value, days = select_field('content', 's_content', {'id': 2})):
     offset = float(select_field('content', 's_content', {'id': 4}))
     sql = "select yesterday_end from shanghai_index order by update_time desc limit %s;" % str(days)
@@ -105,13 +106,17 @@ def send_email_notice(index_value, content):
         subject = '快来【卖出】基金啦！今日上证指数趋于高峰 > %s！' % str(index_value_float)
         send_mail(subject, content)
         print(index_value + " > %s send email success" % str(high_index1))
+    elif '买' in content[2] or '卖' in content[2]:
+        subject = '快来快来，某基金呼喊你'
+        send_mail(subject, content)
+        print('快来快来，某基金呼喊你')
 
 def select_fund_seek_bank(mode='fund'):
-    sql = "select code_id,name from {mode}_info where useful >= '1';".format(mode=mode)
+    sql = "select * from {mode}_info where useful >= '1';".format(mode=mode)
     return selects(sql)
 
 def select_my_fund(mode='fund'):
-    sql = "select code_id,name from {mode}_info where useful = '2';".format(mode=mode)
+    sql = "select * from {mode}_info where useful = '2';".format(mode=mode)
     return selects(sql)
 
 
@@ -136,7 +141,8 @@ def change_fund_increase_dic(fund_code, fund_name):
     fund_increase_info = get_fund_increase_info(fund_code)
     result_dic['code_id'] = fund_code
     result_dic['fund_name'] = fund_name
-    result_dic['assessment'] = float(get_fund_assessment(fund_code))    #加估值
+    result_dic['assessment'] = float(get_fund_assessment(fund_code)['assessment_rate'])    #加估值
+    result_dic['assessment_worth'] = float(get_fund_assessment(fund_code)['assessment_worth'])  # 加预估净值
     result_dic['one_week'] = fund_increase_info['data']['jzzf']['w1']
     result_dic['one_month'] = fund_increase_info['data']['jzzf']['w4']
     result_dic['three_month'] = fund_increase_info['data']['jzzf']['w13']
@@ -150,11 +156,16 @@ def get_result_fund_lst(fund_data, sort_key='assessment'):
     result_lst = []
     for data_dic in fund_data:
         fund_increase_dic = change_fund_increase_dic(data_dic['code_id'], data_dic['name'])
+        if data_dic['worth_to_buy'] and fund_increase_dic['assessment_worth'] < data_dic['worth_to_buy']:
+            fund_increase_dic['fund_name'] = '【买买买】' + fund_increase_dic['fund_name']
+        if data_dic['worth_to_sell'] and fund_increase_dic['assessment_worth'] > data_dic['worth_to_sell']:
+            fund_increase_dic['fund_name'] = '【卖卖卖】' + fund_increase_dic['fund_name']
         fund_increase_dic.pop('code_id')
         fund_increase_dic.pop('three_month')
         fund_increase_dic.pop('six_month')
         fund_increase_dic.pop('one_year')
         fund_increase_dic.pop('three_year')
+        fund_increase_dic.pop('assessment_worth')
         result_lst.append(fund_increase_dic)
     sorted_result_lst = sorted(result_lst, key=operator.itemgetter(sort_key))
     return sorted_result_lst
@@ -199,5 +210,13 @@ def main():
     print(result_stock_bank_content)
     print(strategy_content())
 
+def main2():
+    '''
+    每日估算净值监控
+    '''
+    res = selects("select code_id, name from fund_info where worth is not null")
+
+
 if __name__ == '__main__':
     main()
+

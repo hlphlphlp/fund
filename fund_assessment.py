@@ -23,9 +23,10 @@ def get_fund_assessment(code_id):
     assessment = re.findall(r'{\".+\"}', content)
     print(assessment)
     fund_json = json.loads(assessment[0])
-    return fund_json['gszzl']
+    return {"assessment_rate": fund_json['gszzl'], "assessment_worth": fund_json['gsz']}
 
 if __name__ == '__main__':
     content = get_fund_assessment(161005)
     print(content)
+
 
