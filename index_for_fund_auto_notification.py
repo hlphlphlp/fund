@@ -8,7 +8,7 @@
 import requests
 import operator
 from datetime import datetime
-from common import selects, send_mail, select_field
+from common import selects, send_mail, select_field, excute_sql
 from store_shanghai_index import get_value_from_tengxun_info
 from fund_assessment import get_fund_assessment
 
@@ -119,7 +119,6 @@ def select_my_fund(mode='fund'):
     sql = "select * from {mode}_info where useful = '2';".format(mode=mode)
     return selects(sql)
 
-
 def get_fund_increase_info(fund_code):
     tengxun_url = "http://web.ifzq.gtimg.cn"
     url_ = tengxun_url + "/fund/newfund/fundBase/getRankInfo"
@@ -158,8 +157,10 @@ def get_result_fund_lst(fund_data, sort_key='assessment'):
         fund_increase_dic = change_fund_increase_dic(data_dic['code_id'], data_dic['name'])
         if data_dic['worth_to_buy'] and fund_increase_dic['assessment_worth'] < data_dic['worth_to_buy']:
             fund_increase_dic['fund_name'] = '【买买买】' + fund_increase_dic['fund_name']
+            excute_sql("update fund_info set worth_to_buy=%s where code_id='%s';" % (str(fund_increase_dic['assessment_worth'])),  fund_increase_dic['code_id'])
         if data_dic['worth_to_sell'] and fund_increase_dic['assessment_worth'] > data_dic['worth_to_sell']:
             fund_increase_dic['fund_name'] = '【卖卖卖】' + fund_increase_dic['fund_name']
+
         fund_increase_dic.pop('code_id')
         fund_increase_dic.pop('three_month')
         fund_increase_dic.pop('six_month')

@@ -35,6 +35,15 @@ def insert(sql,db='fund'):
     conn.commit()
     conn.close()
 
+def excute_sql(sql,db='fund'):
+    """新增，
+    例：sql=insert into 表名称 """
+    conn = connect(db)
+    with conn.cursor() as cursor:
+        cursor.execute(sql)
+    conn.commit()
+    conn.close()
+
 def selects(sql,db='fund'):
     conn = connect(db)
     list = []

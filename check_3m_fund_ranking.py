@@ -21,6 +21,7 @@ def get_result_fund_lst6(fund_data, sort_key='six_month'):
         fund_increase_dic.pop('one_month')
         fund_increase_dic.pop('three_month')
         fund_increase_dic.pop('assessment')
+        fund_increase_dic.pop('assessment_worth')
         result_lst.append(fund_increase_dic)
     sorted_result_lst = sorted(result_lst, key=operator.itemgetter(sort_key), reverse=True)
     return sorted_result_lst
@@ -34,6 +35,7 @@ def get_result_fund_lst3(fund_data, sort_key='three_month'):
         fund_increase_dic.pop('one_year')
         fund_increase_dic.pop('three_year')
         fund_increase_dic.pop('assessment')
+        fund_increase_dic.pop('assessment_worth')
         result_lst.append(fund_increase_dic)
     sorted_result_lst = sorted(result_lst, key=operator.itemgetter(sort_key), reverse=True)
     return sorted_result_lst
