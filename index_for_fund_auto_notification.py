@@ -153,12 +153,14 @@ def change_fund_increase_dic(fund_code, fund_name):
 
 def get_result_fund_lst(fund_data, sort_key='assessment'):
     result_lst = []
+    percent_for_buy = select_field('low', 'index_line', {'id': 4})
+    percent_for_sell = select_field('high', 'index_line', {'id': 4})
     for data_dic in fund_data:
         fund_increase_dic = change_fund_increase_dic(data_dic['code_id'], data_dic['name'])
-        if data_dic['worth_to_buy'] and fund_increase_dic['assessment_worth'] < data_dic['worth_to_buy']:
+        if data_dic['worth_to_buy'] and (fund_increase_dic['assessment_worth'] < (data_dic['worth_to_buy'] * percent_for_buy)):
             fund_increase_dic['fund_name'] = '【买买买】' + fund_increase_dic['fund_name']
             excute_sql("""update fund_info set worth_to_buy=%s where code_id='%s';""" % (str(fund_increase_dic['assessment_worth']),  fund_increase_dic['code_id']))
-        if data_dic['worth_to_sell'] and fund_increase_dic['assessment_worth'] > data_dic['worth_to_sell']:
+        if data_dic['worth_to_sell'] and (fund_increase_dic['assessment_worth'] > (data_dic['worth_to_sell'] * percent_for_sell)):
             fund_increase_dic['fund_name'] = '【卖卖卖】' + fund_increase_dic['fund_name']
 
         fund_increase_dic.pop('code_id')

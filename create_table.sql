@@ -17,8 +17,8 @@
 
 CREATE TABLE `index_line` (
   `id` int(4) NOT NULL AUTO_INCREMENT,
-  `low` int(16) DEFAULT NULL,
-  `high` int(16) DEFAULT NULL,
+  `low` double(16,4) DEFAULT NULL,
+  `high` double(16,4) DEFAULT NULL,
   `desc` varchar(255) DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
