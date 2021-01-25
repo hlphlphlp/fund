@@ -5,6 +5,7 @@
 # @Date : 2020/2/18 
 # @Desc :
 
+import time
 import requests
 import operator
 from datetime import datetime
@@ -156,6 +157,7 @@ def get_result_fund_lst(fund_data, sort_key='assessment'):
     percent_for_buy = select_field('low', 'index_line', {'id': 4})
     percent_for_sell = select_field('high', 'index_line', {'id': 4})
     for data_dic in fund_data:
+        time.sleep(1)
         fund_increase_dic = change_fund_increase_dic(data_dic['code_id'], data_dic['name'])
         if data_dic['worth_to_buy'] and (fund_increase_dic['assessment_worth'] < (data_dic['worth_to_buy'] * percent_for_buy)):
             fund_increase_dic['fund_name'] = '【买买买】' + fund_increase_dic['fund_name']
