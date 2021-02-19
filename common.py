@@ -77,8 +77,10 @@ def send_mail(subject, contents):
     contents = ['This is the body, and here is just text http://somedomain/image.png',
                 'You can find an audio file attached.', '/local/path/song.mp3']
     '''
+    print("Start to send email:")
     import yagmail
     yag = yagmail.SMTP(user=select_field('user', 'mail_sender'), password=select_field('password', 'mail_sender'), host=select_field('host', 'mail_sender'))
     yag.send([select_field('email_address', 'mail_to', {'id': 1}), select_field('email_address', 'mail_to', {'id': 2})], subject, contents)
+    print("Send email success !!!!!!!!")
     # yag.send([select_field('email_address', 'mail_to',{'id': 1})
 
