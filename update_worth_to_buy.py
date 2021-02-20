@@ -37,7 +37,7 @@ def get_today_worth(code_id):
 
 def update_worth(worth, code_id):
     excute_sql("""update fund_info set worth_to_buy=%s where code_id='%s';""" % (str(worth), str(code_id)))
-    excute_sql("""update fund_info set useful='2' where code_id='%s';""" % (str(worth), str(code_id)))
+    excute_sql("""update fund_info set useful='2' where code_id='%s';""" % (str(code_id)))
 
 
 def main():
