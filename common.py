@@ -11,9 +11,9 @@ headers = {
     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 12_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/7.0.8(0x17000820) NetType/WIFI Language/zh_CN",
 }
 
-HOST = "127.0.0.1"
+HOST = "localhost"
 USER = "root"
-PWD = "my@sql"
+PWD = ""
 
 def connect(db='fund',host=HOST):
     try:
