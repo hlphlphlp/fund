@@ -6,6 +6,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../..")
 from fund.common import insert
+import random
 
 
 def generate_list(number):
@@ -38,11 +39,21 @@ def generate_diff_numbers_special(number_list, count):
     return res_list
 
 
+def generate_diff_numbers_mixed(number_list, count):
+    import random
+    res_list = []
+    for i in range(count):
+        lucky_number, = random.choice([generate_diff_numbers_basic(number_list, 1), generate_diff_numbers_special(number_list, 1)])
+        res_list.append(lucky_number)
+        # print(number_list)
+    return res_list
+
+
 def main():
     blue_number_list = generate_list(34)
-    blue_lucky_numbers = generate_diff_numbers_special(blue_number_list, 5)
+    blue_lucky_numbers = random.choice([generate_diff_numbers_basic(blue_number_list, 5), generate_diff_numbers_special(blue_number_list, 5), generate_diff_numbers_mixed(blue_number_list, 5)])
     red_number_list = generate_list(11)
-    red_lucky_numbers = generate_diff_numbers_special(red_number_list, 2)
+    red_lucky_numbers = random.choice([generate_diff_numbers_basic(red_number_list, 2), generate_diff_numbers_special(red_number_list, 2), generate_diff_numbers_mixed(red_number_list, 2)])
     blue_lucky_numbers.sort()
     red_lucky_numbers.sort()
     print(blue_lucky_numbers, red_lucky_numbers)
