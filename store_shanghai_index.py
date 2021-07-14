@@ -4,7 +4,7 @@
 # @File : store_shanghai_index.py
 # @Date : 2020/3/1 
 # @Desc :
-
+import re
 import requests
 from common import headers, insert
 
@@ -20,8 +20,11 @@ def get_tengxun_info():
 def get_value_from_tengxun_info():
     index_info = get_tengxun_info()
     index_lst = index_info.split('~~~~~~')
+    print(index_lst[0])
     index_lst0 = index_lst[0].split("~")
-    index_lst1 = index_lst[0].split("~~~~")[-2].split("~")
+
+    index_lst1 = re.search(r'(?<=~~).*?(?=/)', index_lst[0]).group().split("~")
+    print(index_lst1)
     index_lst2 = index_lst[-1].split("~")
     print("index_lst0: " + str(index_lst0))
     print("index_lst1: " + str(index_lst1))
@@ -31,12 +34,12 @@ def get_value_from_tengxun_info():
     current_value = index_lst0[3]
     yesterday_end = index_lst0[4]
     today_begin = index_lst0[5]
-    today_highest = index_lst1[-5]
-    today_lowest = index_lst1[-4]
+    today_highest = index_lst1[3]
+    today_lowest = index_lst1[4]
     deal_count = round(float(index_lst0[6])/100000000, 2)
     deal_money = round(float(index_lst2[0])/10000, 2)
-    compare_to_yesterday = index_lst1[-7]
-    amplitude = index_lst1[-6]
+    compare_to_yesterday = index_lst1[1]
+    amplitude = index_lst1[2]
 
     return {'name': name, 'id': id, 'current_value': current_value, 'yesterday_end': yesterday_end, 'today_begin': today_begin,
             'today_highest': today_highest, 'today_lowest': today_lowest, 'deal_count': deal_count, 'compare_to_yesterday': compare_to_yesterday,
@@ -82,3 +85,4 @@ def save_data(result_dic):
 if __name__ == '__main__':
     result_dic = get_value_from_tengxun_info()
     save_data(result_dic)
+
